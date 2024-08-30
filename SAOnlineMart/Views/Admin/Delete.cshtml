@@ -1,0 +1,21 @@
+﻿@model SAOnlineMart.Models.Product
+
+@{
+    ViewData["Title"] = "Delete Product";
+}
+
+<div class="container">
+    <h1>Delete Product</h1>
+
+    <h3>Are you sure you want to delete this product?</h3>
+    <div>
+        <h4>@Model.Name</h4>
+        <p>@Model.Description</p>
+        <p>Price: @Model.Price.ToString("C")</p>
+    </div>
+
+    <form method="post">
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a href="/Admin/Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

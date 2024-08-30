@@ -1,0 +1,50 @@
+﻿@model IEnumerable<SAOnlineMart.Models.CartItem>
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h2>Cart</h2>
+
+@if (Model.Any())
+{
+    <form asp-action="UpdateQuantity" method="post">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Product.Name</td>
+                        <td>@item.Product.Price.ToString("C")</td>
+                        <td>
+                            <input type="number" name="cartItems[@item.Product.Id].Quantity" value="@item.Quantity" min="1" />
+                        </td>
+                        <td>@(item.Product.Price * item.Quantity).ToString("C")</td>
+                        <td>
+                            <form asp-action="RemoveFromCart" method="post" style="display:inline;">
+                                <input type="hidden" name="productId" value="@item.Product.Id" />
+                                <button type="submit" class="btn btn-danger">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">Update Quantities</button>
+    </form>
+}
+else
+{
+    <p>Your cart is empty.</p>
+}
+
+<a asp-action="Checkout" class="btn btn-success">Proceed to Checkout</a>
